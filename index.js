@@ -1,17 +1,7 @@
-const readline = require("readline");
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+const rl = require('./input.js');
 
-rl.question("What is your name ? ", function(name) {
-    rl.question("Where do you live ? ", function(country) {
-        console.log(`${name}, is a citizen of ${country}`);
-        rl.close();
-    });
-});
+console.log('\x1b[36m%s\x1b[0m', 'Welcome to TicTacToe CLI!')
 
-rl.on("close", function() {
-    console.log("\nBYE BYE !!!");
-    process.exit(0);
+rl.prompt('X', (name) => {
+  console.log(name)
 });
