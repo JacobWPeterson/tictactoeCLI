@@ -20,6 +20,10 @@ const checkRow = (array, player) => {
   return array.join('') === `${player}${player}${player}`;
 }
 
+const checkColumn = (cell, player) => {
+  return board[0][cell] + board[1][cell] + board[2][cell]  === `${player}${player}${player}`;
+}
+
 const tictactoe = (player) => {
   rl.question(`What is your move ${player}? `, (move) => {
     if (move < 1 || move > 9 ) {
@@ -46,6 +50,12 @@ const tictactoe = (player) => {
       console.log('\n');
 
       if(checkRow(board[array], player)) {
+        console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
+        rl.close();
+        return;
+      }
+
+      if(checkColumn(index, player)) {
         console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
         rl.close();
         return;
