@@ -8,24 +8,32 @@ console.table(board);
 
 let squaresPlayed = [];
 
-let currentPlayer = 'X';
-
-const checkSquareIsEmpty = (square) => {
-  return squaresPlayed.indexOf(square) !== square
-}
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
+const checkSquareIsEmpty = (square) => {
+  return squaresPlayed.indexOf(square) !== square
+}
+
+const checkRow = (array, player) => {
+  return array.join('') === `${player}${player}${player}`;
+}
+
 const tictactoe = (player) => {
   rl.question(`What is your move ${player}? `, (move) => {
     if (move < 1 || move > 9 ) {
       console.log('Invalid input, try again.')
-      tictactoe(currentPlayer);
+      tictactoe(player);
       return;
     }
+    if (squaresPlayed.includes(move)) {
+      console.log('Already played, try again.')
+      tictactoe(player);
+      return;
+    }
+    squaresPlayed.push(move);
     if (checkSquareIsEmpty(move)) {
       let array = Math.floor(move/3);
       let index = (move % 3) - 1;
@@ -33,8 +41,16 @@ const tictactoe = (player) => {
         array--;
         index = 2;
       }
-      board[array][index] = currentPlayer;
-      console.table(board)
+      board[array][index] = player;
+      console.clear();
+      console.table(board);
+      console.log('\n');
+
+      if(checkRow(board[array], player)) {
+        console.log('Winner')
+        rl.close();
+        return;
+      }
 
       if (board[2][2] === 'X') {
         console.log('Winner')
@@ -42,7 +58,7 @@ const tictactoe = (player) => {
         return;
       }
 
-      if (currentPlayer === 'X') {
+      if (player === 'X') {
         tictactoe('0');
       } else {
         tictactoe('X');
@@ -50,5 +66,5 @@ const tictactoe = (player) => {
     };
   });
 }
-tictactoe(currentPlayer);
+tictactoe('X');
 
