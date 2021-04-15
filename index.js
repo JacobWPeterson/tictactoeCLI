@@ -1,7 +1,7 @@
 const readline = require("readline");
 
 console.clear();
-console.log('\x1b[36m%s\x1b[0m', 'Welcome to TicTacToe CLI!')
+console.log('\x1b[36m%s\x1b[0m', 'Welcome to TicTacToe CLI!\n')
 const board = [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
 
 console.table(board);
@@ -31,15 +31,19 @@ const diagonalCheck = (player) => {
   return diagonal1.join('') === `${player}${player}${player}` || diagonal2.join('') === `${player}${player}${player}`
 }
 
+const winner = (player) => {
+  console.log('\x1b[32m%s\x1b[0m', `\n${player} is the Winner!\n`);
+}
+
 const tictactoe = (player) => {
-  rl.question(`What is your move ${player}? `, (move) => {
+  rl.question(`\nWhat is your move ${player}? `, (move) => {
     if (move < 1 || move > 9 ) {
-      console.log('Invalid input, try again.')
+      console.log('\x1b[31m%s\x1b[0m', '\nInvalid input, try again.\n')
       tictactoe(player);
       return;
     }
     if (squaresPlayed.includes(move)) {
-      console.log('\x1b[31m%s\x1b[0m', 'Already played, try again.')
+      console.log('\x1b[31m%s\x1b[0m', '\nAlready played, try again.\n')
       tictactoe(player);
       return;
     }
@@ -54,22 +58,21 @@ const tictactoe = (player) => {
       board[array][index] = player;
       console.clear();
       console.table(board);
-      console.log('\n');
 
       if(checkRow(board[array], player)) {
-        console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
+        winner(player);
         rl.close();
         return;
       }
 
       if(checkColumn(index, player)) {
-        console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
+        winner(player)
         rl.close();
         return;
       }
 
       if(diagonalCheck(player)) {
-        console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
+        winner(player)
         rl.close();
         return;
       }
