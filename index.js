@@ -1,4 +1,3 @@
-// const rl = require('./input.js');
 const readline = require("readline");
 
 
@@ -29,7 +28,7 @@ const tictactoe = (player) => {
       return;
     }
     if (squaresPlayed.includes(move)) {
-      console.log('Already played, try again.')
+      console.log('\x1b[31m%s\x1b[0m', 'Already played, try again.')
       tictactoe(player);
       return;
     }
@@ -47,21 +46,21 @@ const tictactoe = (player) => {
       console.log('\n');
 
       if(checkRow(board[array], player)) {
-        console.log('Winner')
+        console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
         rl.close();
         return;
       }
 
-      if (board[2][2] === 'X') {
-        console.log('Winner')
+      if(squaresPlayed.length === 9) {
+        console.log('\x1b[32m%s\x1b[0m', 'Tie Game')
         rl.close();
         return;
-      }
-
-      if (player === 'X') {
-        tictactoe('0');
       } else {
-        tictactoe('X');
+        if (player === 'X') {
+          tictactoe('0');
+        } else {
+          tictactoe('X');
+        }
       }
     };
   });
