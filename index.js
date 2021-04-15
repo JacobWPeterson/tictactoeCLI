@@ -1,8 +1,9 @@
 const readline = require("readline");
 
-
+console.clear();
 console.log('\x1b[36m%s\x1b[0m', 'Welcome to TicTacToe CLI!')
 const board = [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+
 console.table(board);
 
 let squaresPlayed = [];
@@ -22,6 +23,12 @@ const checkRow = (array, player) => {
 
 const checkColumn = (cell, player) => {
   return board[0][cell] + board[1][cell] + board[2][cell]  === `${player}${player}${player}`;
+}
+
+const diagonalCheck = (player) => {
+  const diagonal1 = [board[0][0], board[1][1], board[2][2]];
+  const diagonal2 = [board[0][2], board[1][1], board[2][0]];
+  return diagonal1.join('') === `${player}${player}${player}` || diagonal2.join('') === `${player}${player}${player}`
 }
 
 const tictactoe = (player) => {
@@ -56,6 +63,12 @@ const tictactoe = (player) => {
       }
 
       if(checkColumn(index, player)) {
+        console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
+        rl.close();
+        return;
+      }
+
+      if(diagonalCheck(player)) {
         console.log('\x1b[32m%s\x1b[0m', `${player} is the Winner!`)
         rl.close();
         return;
