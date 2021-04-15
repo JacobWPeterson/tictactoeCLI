@@ -8,13 +8,19 @@ const prompt = (player, callback) => {
 
   rl.question(`What is your move ${player}? `, (move) => {
     callback(move);
-    rl.close();
+    // rl.close();
   });
 
+
   rl.on("close", function() {
-      console.log("\nThanks");
-      process.exit(0);
+    process.exit(0);
   });
 }
 
-module.exports = { prompt };
+const shut = () => {
+  rl.close();
+}
+
+module.exports.prompt = prompt;
+module.exports.shut = shut;
+
